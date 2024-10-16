@@ -4,8 +4,11 @@ import { createTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
+import { useLoggedIn } from '../App';
+import auth from '../utils/auth';
 
 const CreateTicket = () => {
+  const [loggedIn, setLoggedIn] = useLoggedIn();
   const [newTicket, setNewTicket] = useState<TicketData | undefined>(
     {
       id: 0,
@@ -21,6 +24,13 @@ const CreateTicket = () => {
 
   const [users, setUsers] = useState<UserData[] | undefined>([]);
 
+   const checkLogin = () => {
+     if (!auth.loggedIn()) {
+       setLoggedIn(false);
+       navigate("/login");
+     }
+   };
+
   const getAllUsers = async () => {
     try {
       const data = await retrieveUsers();
@@ -31,8 +41,9 @@ const CreateTicket = () => {
   };
 
   useEffect(() => {
+    checkLogin();
     getAllUsers();
-  }, []);
+  }, [loggedIn]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

@@ -1,9 +1,13 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-
+import { useLoggedIn } from '../App';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
 const Login = () => {
+  const [_loggedIn, setLoggedIn] = useLoggedIn();
+  // console.log('loggedIn:', loggedIn);
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     username: '',
     password: ''
@@ -22,6 +26,8 @@ const Login = () => {
     try {
       const data = await login(loginData);
       Auth.login(data.token);
+      setLoggedIn(true);
+      navigate('/');
     } catch (err) {
       console.error('Failed to login', err);
     }
