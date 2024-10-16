@@ -1,4 +1,4 @@
-const forceDatabaseRefresh = false;
+// const forceDatabaseRefresh = false;
 import { seedAll } from './seeds/index.js';
 
 import dotenv from 'dotenv';
