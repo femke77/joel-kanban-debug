@@ -1,7 +1,7 @@
 import path from 'path';
 
 const forceDatabaseRefresh = false;
-import { seedAll } from './seeds/index.js';
+// import { seedAll } from './seeds/index.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
-await seedAll();
+// await seedAll();
 
 sequelize.sync({force: forceDatabaseRefresh}).then(() => {
   app.listen(PORT, () => {
